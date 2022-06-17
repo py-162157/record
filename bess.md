@@ -18,6 +18,7 @@
 # 卸载老版本python3（可以不用卸载）
 `sudo apt remove python3`
 `sudo rm /usr/local/*3.6`
+`dpkg -l |grep python`，然后一个一个卸载python3
 
 # 安装新版本python3
 1. `wget https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tar.xz`
