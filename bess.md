@@ -39,10 +39,23 @@
 
 # 提示
 
-目前安装的python版本与原版本共存，使用时需指定python3.10，pip的命令也为pip3.10
-或者使用 `sudo make install` 直接覆盖原有的python3二进制文件
-bess使用的parser module在python3.10版本被删除了，须使用3.7-3.8版本的python
+1. 目前安装的python版本与原版本共存，使用时需指定python3.10，pip的命令也为pip3.10
+2. 或者使用 `sudo make install` 直接覆盖原有的python3二进制文件
+3. bess使用的parser module在python3.10版本被删除了，须使用3.7-3.8版本的python
+4. 如果出现 `which grpc_python_plugin`找不到的问题，`sudo apt install protobuf-compiler-grpc`
 
 ## dpdk编译
 
-dpdk16.07使用make编译，而dpdk20.11使用meson来编译，注意变换编译工具
+dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变换编译工具
+
+### bess(c-legacy)分支替换dpdk20.11.3
+
+1. `wget https://fast.dpdk.org/rel/dpdk-20.11.3.tar.gz`至bess/deps并解压为dpdk-20.11.3
+2. 在build.py里将dpdk版本改为20.11.3
+3. 在core/Makefile里将dpdk版本改为20.11.3
+4. `core/snbuf.h`里第250行改为 `return (phys_addr_t)mbuf->buf_addr + mbuf->data_off;`
+5. 在 `core/common.h`里注释掉22-24行的 `container_of`宏定义，因其与标准库中重复定义；
+6. 在bess目录里将所有likely和unlikely宏改名，因其与标准库冲突且不可替代，不能直接注释掉；
+7. 将core/snbuf.c的35行改为 `immutable->paddr = rte_mempool_virt2iova(snb);`
+8. `sudo meson --buildtype=debugoptimized /home/pengyang/bess/deps/dpdk-20.11.3/build /home/pengyang/bess/deps/dpdk-20.11.3`
+9. `sudo ninja -C /home/pengyang/bess/deps/dpdk-20.11.3/build install`

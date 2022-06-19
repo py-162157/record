@@ -38,4 +38,18 @@
 ## ubuntu20.04裸机安装python2.7
 
 1. `sudo apt update`
-2. `sudo apt install python2-minimal`
+2. `sudo apt install python2-minimal`（在18.04系统上为 `python2.7-minimal`）
+
+## pip指定镜像源
+
+`-i https://pypi.tuna.tsinghua.edu.cn/simple`
+
+## 安装zlib
+
+1. `http://www.zlib.net/zlib-1.2.12.tar.gz`
+2. `./configure`
+3. `make install`
+
+## 缺少ffi.h
+
+`sudo apt-get install build-essential libssl-dev libffi-dev python-dev`
