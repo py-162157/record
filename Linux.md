@@ -73,3 +73,6 @@
 `nameservers:                         `
 
 `addresses: [4.4.4.4, 8.8.8.8, 114.114.114.114]`
+
+## 添加apt目录
+在`/etc/apt/source.list.d/`里新建.list文件并写入`deb [镜像源dist前的路径] [镜像源dist后的路径] main`

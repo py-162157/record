@@ -59,3 +59,18 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 7. 将core/snbuf.c的35行改为 `immutable->paddr = rte_mempool_virt2iova(snb);`
 8. `sudo meson --buildtype=debugoptimized /home/pengyang/bess/deps/dpdk-20.11.3/build /home/pengyang/bess/deps/dpdk-20.11.3`
 9. `sudo ninja -C /home/pengyang/bess/deps/dpdk-20.11.3/build install`
+
+## benchmark安装
+1. `git clone https://github.com/google/benchmark.git`
+2. `cmake -E make_directory "build"`
+3. `cmake -E chdir "build" cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ../`
+4. `cmake --build "build" --config Release`
+5. 应用全局安装`sudo cmake --build "build" --config Release --target install`
+
+## bess-dpdk17.11安装
+1. `git clone https://github.com/NetSys/bess`
+2. `git checkout -b dpdk-17.11 5994415559efd7580354b08ecfc043a8e0aff7a6`
+3. `sudo apt install ansible`
+4. `./ansible-playbook -K -i localhost, -c local env/dev.yml`
+5. 将core/utils/copy_bench.cc里第176行改为`BENCHMARK_MAIN();`
+6. `sudo python3 build.py`

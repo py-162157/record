@@ -1,6 +1,6 @@
-## python安装grpc组件
+## python安装bess所需的grpc组件
 
-`pip install grpcio grpcio-tools protobuf`
+`pip install grpcio grpcio-tools protobuf=3.12.0`
 
 ## 卸载老版本python3（可以不用卸载）
 
@@ -53,3 +53,6 @@
 ## 缺少ffi.h
 
 `sudo apt-get install build-essential libssl-dev libffi-dev python-dev`
+
+## 没有pip module
+`sudo apt install --fix-missing python3-pip`
