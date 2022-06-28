@@ -81,3 +81,7 @@
 1. `apt-cache  search linux|grep linux-image`
 2. `apt-get  install linux-image***`
 3. `apt-get  install linux-headers***`
+4. 在`/etc/default/grub`里注释掉hidden相关
+5. `update-grub`后重启通过advanced选择内核
+
+4.4, 4.8, 4.10, 4.11, 4.13

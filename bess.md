@@ -96,4 +96,8 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 
 ## grpc组件安装
 1. `git clone -b v1.3.2 https://github.com/grpc/grpc`
-2. `git submodule update --init`
+2. `git submodule update --init`3
+
+## OFED版本选择4.2-1.0.0.0
+1. 所需的依赖libnl1目前已经无法从软件源安装，`wget http://archive.ubuntu.com/ubuntu/pool/universe/libn/libnl/libnl1_1.1-8ubuntu1_amd64.deb`
+2. OFED出现`ModuleNotFoundError: No module named 'lsb_release'`，是更新python版本导致的，打开`/usr/bin/lsb_release`，将`#!/usr/bin/python3 -Es`改为`#!/usr/bin/python3.5m -Es`，其中3.5m为系统自带的python3版本。
