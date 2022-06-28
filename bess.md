@@ -67,16 +67,7 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 4. `cmake --build "build" --config Release`
 5. 应用全局安装`sudo cmake --build "build" --config Release --target install`
 
-# bess-dpdk17.11安装
-## 前期准备
-1. `git clone https://github.com/NetSys/bess`
-2. `git checkout -b dpdk-17.11 5994415559efd7580354b08ecfc043a8e0aff7a6`
-3. `sudo apt install ansible`
-4. `ansible-playbook -K -i localhost, -c local env/dev.yml`
-5. `sudo python3 build.py`
-
-## 源码安装g++/gcc11.1.0
-该版本需要`__CPLUSPLUS__`定义为201703L及以上，需要新g++和gcc版本。查询得需要11.1.0版本及以上，而bess的env中的版本并未更新（坑爹）。
+## 安装g++/gcc11.1.0
 ### ubuntu20.04
 1. `sudo apt-get install software-properties-common`
 2. `sudo add-apt-repository ppa:ubuntu-toolchain-r/test`
@@ -88,16 +79,21 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 2. 安装编译依赖`wget ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-6.1.0.tar.bz2`, `wget ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-3.1.4.tar.bz2`, `wget ftp://gcc.gnu.org/pub/gcc/infrastructure/mpc-1.0.3.tar.gz`
 3. 解压`tar jxvf `, `./configure`, `sudo make && sudo make install`
 4. 编译gcc`./configure --disable-multilib --enable-languages=c,c++`
-5. `sudo make && sudo make install `
+5. `sudo make -j 40 && sudo make install `
+
+# bess-dpdk17.11安装
+## 前期准备
+1. `git clone https://github.com/NetSys/bess`
+2. `git checkout -b dpdk-17.11 2516e21348e33be5b65eb9ce451d3bdfce4d4a4b`
+3. `sudo apt install ansible`
+4. `ansible-playbook -K -i localhost, -c local packages.yml`，其中删掉`- apt_repository: repo='deb http://apt.llvm.org/{{ ansible_distribution_release }}/ llvm-toolchain-{{ ansible_distribution_release }}-4.0 main`
+5. 建议分多个步骤逐步进行
+6. packages.yml中的grpcio和scapy注释掉，手动安装grpcio-tools==1.12.1和scapy==2.3.3，要求python3版本为为3.7及以上。ubutnu16.04自带版本为3.5.2，需要从源码编译安装python3。
+7. 在deps下下载dpdk-17.11，`wget fast.dpdk.org/rel/dpdk-17.11.tar.gz`并解压
+8. `sudo python3 build.py`
+
+
 
 ## grpc组件安装
 1. `git clone -b v1.3.2 https://github.com/grpc/grpc`
-2. 在grpc/thirdparty里安装各分组件：
-3. `proxychains git clone -b v1.4.1 https://github.com/google/benchmark`
-4. `proxychains git clone https://github.com/google/boringssl`并`git checkout -b "cloest-version" 2a19a17ca754a178c74ce5736adaf30f3ca6465b`
-5. `git clone https://github.com/zjwzcnjsy/boringssl-with-bazel`
-6. `git clone -b 2.2.1 https://github.com/gflags/gflags`
-7. `git clone -b release-1.8.0 https://github.com/google/googletest`
-8. `proxychains git clone -b v1.1.0 https://github.com/golang/protobuf`
-9. `git clone -b 0.11.0 https://github.com/apache/thrift`
-10. 
+2. `git submodule update --init`

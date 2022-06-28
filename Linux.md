@@ -76,3 +76,8 @@
 
 ## 添加apt目录
 在`/etc/apt/source.list.d/`里新建.list文件并写入`deb [镜像源dist前的路径] [镜像源dist后的路径] main`
+
+## 安装指定版本linux内核
+1. `apt-cache  search linux|grep linux-image`
+2. `apt-get  install linux-image***`
+3. `apt-get  install linux-headers***`
