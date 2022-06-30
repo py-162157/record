@@ -96,8 +96,12 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 
 ## grpc组件安装
 1. `git clone -b v1.3.2 https://github.com/grpc/grpc`
-2. `git submodule update --init`3
+2. `git submodule update --init`
 
 ## OFED版本选择4.2-1.0.0.0
 1. 所需的依赖libnl1目前已经无法从软件源安装，`wget http://archive.ubuntu.com/ubuntu/pool/universe/libn/libnl/libnl1_1.1-8ubuntu1_amd64.deb`
 2. OFED出现`ModuleNotFoundError: No module named 'lsb_release'`，是更新python版本导致的，打开`/usr/bin/lsb_release`，将`#!/usr/bin/python3 -Es`改为`#!/usr/bin/python3.5m -Es`，其中3.5m为系统自带的python3版本。
+3. 升级python后提示没有apt_pkg包，在`/usr/lib/python3/dist-packages`目录下执行`sudo cp apt_pkg.cpython-35m-x86_64-linux-gnu.so apt_pkg.cpython-37m-x86_64-linux-gnu.so`
+4. linux-kernel版本需要切换到4.4.0版本，目前官网下载的16.04为4.15.0版本。OFED指定的ubuntu16.04具体内核版本为4.4.0-22，但是该内核版本太老，已经无法在现有硬件上运行，所以切换到4.4.0-142版本。
+5. 安装时选择`./mlnxofedinstall --upstream-libs --dpdk`，后面的选项一定要加上，不然编译DPDK会出问题。
+6. 以修改过后的bess-build.py替换bess原有的build.py
