@@ -8,3 +8,11 @@
 
 ## vpp命令
 1. 添加删除IP地址`set int ip address (del) GigabitEthernet0/6/0 10.3.0.1/24`
+
+## vpp-2110与dpdk联合编译
+1. `git clone -b stable/2110 https://github.com/FDio/vpp.git`
+2. `sudo make install-deps`与`sudo make install-ext-deps`
+3. 在`vpp/build-data/platforms/vpp.mk`里加上`vpp_uses_dpdk_mlx5_pmd=y`
+4. 在`vpp/build/external/packages/dpdk.mk`里将`mlx5-pmd`修改为y
+5. `sudo make build -j 40`
+6. `sudo make build-release`
