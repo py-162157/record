@@ -248,17 +248,17 @@ def check_mlx():
     if ibverbs_avail:
         if mlx4_avail:
             extra_libs.add('mlx4')
-            set_config(DPDK_CONFIG, 'CONFIG_RTE_LIBRTE_MLX4_PMD', 'y')
+            set_config(DPDK_FINAL_CONFIG, 'CONFIG_RTE_LIBRTE_MLX4_PMD', 'y')
         else:
             print(" - Mellanox OFED: MLX4 PMD not available, disabling...")
-            set_config(DPDK_CONFIG, 'CONFIG_RTE_LIBRTE_MLX4_PMD', 'n')
+            set_config(DPDK_FINAL_CONFIG, 'CONFIG_RTE_LIBRTE_MLX4_PMD', 'n')
 
         if mlx5_avail:
             extra_libs.add('mlx5')
-            set_config(DPDK_CONFIG, 'CONFIG_RTE_LIBRTE_MLX5_PMD', 'y')
+            set_config(DPDK_FINAL_CONFIG, 'CONFIG_RTE_LIBRTE_MLX5_PMD', 'y')
         else:
             print(" - Mellanox OFED: MLX5 PMD not available, disabling...")
-            set_config(DPDK_CONFIG, 'CONFIG_RTE_LIBRTE_MLX5_PMD', 'n')
+            set_config(DPDK_FINAL_CONFIG, 'CONFIG_RTE_LIBRTE_MLX5_PMD', 'n')
 
         if mlx5_avail or mlx4_avail:
             extra_libs.add('ibverbs')
@@ -346,6 +346,7 @@ def configure_dpdk():
 
         cmd('cp -f %s %s' % (DPDK_FINAL_CONFIG, DPDK_ORIG_CONFIG))
         cmd('make -C %s config T=%s' % (DPDK_DIR, DPDK_TARGET))
+        print('make -C %s config T=%s' % (DPDK_DIR, DPDK_TARGET))
     finally:
         cmd('rm -f %s' % DPDK_FINAL_CONFIG)
 
@@ -355,9 +356,10 @@ def build_dpdk():
     download_dpdk(quiet=True)
 
     # not configured yet?
-    if not os.path.exists('%s/build' % DPDK_DIR):
-        configure_dpdk()
+    # if not os.path.exists('%s/build' % DPDK_DIR):
+    #     configure_dpdk()
 
+    configure_dpdk()
     print('Building DPDK...')
     nproc = int(cmd('nproc', quiet=True))
     cmd('make -j%d -C %s EXTRA_CFLAGS=%s' % (nproc, DPDK_DIR, DPDK_CFLAGS))

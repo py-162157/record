@@ -105,3 +105,9 @@ dpdk16.07使用make编译，而dpdk20.11使用meson和ninja来编译，注意变
 4. linux-kernel版本需要切换到4.4.0版本，目前官网下载的16.04为4.15.0版本。OFED指定的ubuntu16.04具体内核版本为4.4.0-22，但是该内核版本太老，已经无法在现有硬件上运行，所以切换到4.4.0-142版本。
 5. 安装时选择`./mlnxofedinstall --upstream-libs --dpdk`，后面的选项一定要加上，不然编译DPDK会出问题。
 6. 以修改过后的bess-build.py替换bess原有的build.py
+7. 运行dpdk-devbind的时候需要切换回4.15内核才行。
+
+# ubuntu20.04编译bess-dpdk2011-focal分支
+1. 按照/env/dev.yml里安装所需包
+2. 在`core/kmog/sn_ethtool.c`的头文件里加上`#include <linux/ethtool.h>`
+3. 运行编译脚本
