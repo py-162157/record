@@ -8,3 +8,7 @@
 
 1. `sudo mn --custom fat-tree-4.py --topo mytopo --switch ovsbr,stp=1`
 2. 胖树拓扑中存在环路，需要等到STP运行完毕才能ping通， `py net.waitConnected()`
+
+## 报错找不到包
+
+主要是因为sudo用户的pythonpath环境跟普通用户不一样，而mininet需要以root用户运行，需要在/root/.bashrc里添加 `export PYTHONPATH=$PYTHONPATH:/home/pengyang/Distrinet/mininet`
