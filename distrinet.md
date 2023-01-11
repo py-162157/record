@@ -6,12 +6,15 @@
 [workers]
 172.28.112.3 ansible_python_interpreter=/usr/bin/python3 ansible_ssh_user="root" ansible_ssh_pass="pengyang"
 ```
-2. 以root账户ssh登录一次worker机，在此之前需要在worker机`sudo vim /etc/ssh/sshd_config`并添加
+
+2. 如果是第一次以root账户登录的话，需要重设root密码`sudo passwd root`
+
+3. 以root账户ssh登录一次worker机，在此之前需要在worker机`sudo vim /etc/ssh/sshd_config`并添加
 ```
 Port 22
 PermitRootLogin yes
 ```
-3. 在`/etc/ansible/ansible.cfg`里添加
+4. 在`/etc/ansible/ansible.cfg`里添加
 ```
 [defaults]
 host_key_checking = false
