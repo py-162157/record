@@ -16,3 +16,4 @@
 4. 在`vpp/build/external/packages/dpdk.mk`里将`mlx5-pmd`修改为y
 5. `sudo make build -j 40`
 6. `sudo make build-release`
+7. `make pkg-deb`
