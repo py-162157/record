@@ -39,3 +39,14 @@ network:
 1. `growpart /dev/vda 1`
 2. 重启
 3. `resize2fs /dev/vda1`
+
+或者
+1. `vgdisplay`
+```
+lvextend -L 120G /dev/mapper/ubuntu--vg-ubuntu--lv //增大至120G
+lvextend -L +20G /dev/mapper/ubuntu--vg-ubuntu--lv //增加20G
+lvreduce -L 50G /dev/mapper/ubuntu--vg-ubuntu--lv //减小至50G
+lvreduce -L -8G /dev/mapper/ubuntu--vg-ubuntu--lv //减小8G
+lvresize -L 30G /dev/mapper/ubuntu--vg-ubuntu--lv //调整为30G
+resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv //执行调整
+```
