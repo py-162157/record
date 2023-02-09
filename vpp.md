@@ -17,3 +17,4 @@
 5. `sudo make build -j 40`
 6. `sudo make build-release`
 7. `make pkg-deb`
+8. 进入到build-root目录里`dpkg -i *.deb`
