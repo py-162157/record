@@ -14,3 +14,28 @@
 ## 虚拟机克隆
 `virt-clone -o worker1 -n worker2 -f ./worker2.img`，其中o是原虚拟机，n是新虚拟机，克隆后没有网卡的话就编辑`/etc/udev/rule.d/70-persistent-net.rules`如下:  
 `SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="52:54:00:77:61:e2 ", KERNEL=="eth*", NAME="ens2"`
+
+## 通过netplan配置IP
+```
+network:
+  ethernets:
+    eno1:
+      dhcp4: false
+      addresses: [192.168.1.163/24]
+      gateway4: 192.168.1.254
+      nameservers:
+        addresses: [114.114.114.114]
+    eno4:
+      dhcp4: false
+      addresses: [192.168.2.236/24]
+      gateway4: 192.168.2.254
+      nameservers:
+          addresses: [114.114.114.114,192.168.2.254]
+  version: 2
+```
+
+## 改变某卷大小
+
+1. `growpart /dev/vda 1`
+2. 重启
+3. `resize2fs /dev/vda1`
