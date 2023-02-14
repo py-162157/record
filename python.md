@@ -56,3 +56,13 @@
 
 ## 没有pip module
 `sudo apt install --fix-missing python3-pip`
+
+## xlrd包不能读取xlsx文件
+1. 安装老版本`pip uninstall xlrd`
+2. 或者将excel文件格式改为xls
+
+## python绘图不显示中文
+```
+plt.rcParams['font.family'] = ['sans-serif']
+plt.rcParams['font.sans-serif'] = ['SimHei']
+```
