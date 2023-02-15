@@ -14,3 +14,14 @@
     }
 }
 `
+
+## 转json结构化打印结构体
+```
+"bytes"
+"encoding/json"
+
+bs, _ := json.Marshal(mynet)
+var out bytes.Buffer
+json.Indent(&out, bs, "", "\t")
+fmt.Printf("spine-leaf=%v\n", out.String())
+```
