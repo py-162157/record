@@ -59,7 +59,8 @@
 
 ## xlrd包不能读取xlsx文件
 1. 安装老版本`pip uninstall xlrd`
-2. 或者将excel文件格式改为xls
+2. `pip install xlrd==1.2.0`
+3. 或者将excel文件格式改为xls
 
 ## python绘图不显示中文
 ```
